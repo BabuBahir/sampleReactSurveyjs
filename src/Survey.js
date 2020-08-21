@@ -49,6 +49,35 @@ function onComplete(result) {
     console.log("Complete! " + result);
 }
 
+function onUploadFiles(survey,options){
+    var formData = new FormData();
+    options
+        .files
+        .forEach(function (file) {
+            formData.append(file.name, file);
+        });
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.open("POST", "/YouarApi/MySurveys/uploadFiles");  
+    xhr.onload = function () {
+        var data = xhr.response;
+        options.callback("success", options.files.map(file => {
+            return {
+                file: file,
+                content: data[file.name]
+            };
+        }));
+    };
+    xhr.send(formData);
+}
+
+function onClearFiles(result){
+    console.log(' grindrceel');
+}
+
+function onAfterRenderSurvey(sender,options){
+    console.log(sender);
+}
 
 export function SurveyPage() {
     var model = new Survey.Model(json);
@@ -58,7 +87,9 @@ export function SurveyPage() {
         <Survey.Survey
             model={model}
             onComplete={onComplete}
-            onValueChanged={onValueChanged}
+            onValueChanged={onValueChanged} 
+            onUploadFiles={onUploadFiles}
+            onAfterRenderSurvey ={onAfterRenderSurvey } 
           />
     </div>
     );
