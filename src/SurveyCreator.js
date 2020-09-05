@@ -319,37 +319,74 @@ class SurveyCreator extends Component {
           {     
             "type": "html",
             "name": "SEND",
-            "html": "<button class='my-button'>Send</button>"
+            "html": "<button class='my-button'>Call Bank Services</button>"
           }
         }); 
 
+    this.surveyCreator.toolbox
+    .addItem({
+          name: "signatoryBox",
+          isCopied: true,
+          iconName: "icon-dropdown",
+          title: "Signatory Box",
+          category: "General",
+          json:
+          {     
+                "type": "radiogroup",
+              "name": "MODE",
+              "title": "Mode",
+              "choices": [
+              {
+              "value": "universign-face",
+              "text": "e-sign face-to-face"
+              },
+              {
+              "value": "universign",
+              "text": "e-sign"
+              },
+              {
+              "value": "manual",
+              "text": "manual"
+              }
+              ],
+              "colCount": 3
+            }
+        }); 
+
+    this.surveyCreator.toolbox.hideAdvancedSettings  =true;
+
+
       SurveyKo.Serializer.addProperty("survey", 
-        { name: "signmode" ,displayName: "Mode",category: "Signature" , 
-        choices: function(obj, choicesCallback) {
-          console.log(self.surveyCreator.text); //*********  query By $..elements..name 
-          if(self.surveyCreator.text.indexOf("elements") != -1){ 
-          //We are going to use choicesCallback here
-               var res =["question1","question2","question3","question4","question5","question6","question7"];
-                //We will use ItemValue array here, since we want to have value different from display text
-                //If your value equals to display text, then you may simply return the array of strings.
-                // res.push({ value: null }); 
-                // for (var i = 0; i < res.length; i++) {
-                //   var item = res[i];
-                //   res.push({ value: item.alpha2Code, text: item.name });
-                //   }
-                //return the result into Survey Creator property editor
-                choicesCallback(res);
-          }
-        }
+        { name: "signmode" ,displayName: "Mode",category: "Signature" , type: "checkbox"
+        // choices: function(obj, choicesCallback) {
+        //   console.log(self.surveyCreator.text); //*********  query By $..elements..name 
+        //   if(self.surveyCreator.text.indexOf("elements") != -1){ 
+        //   //We are going to use choicesCallback here
+        //        var res =["question1","question2","question3","question4","question5","question6","question7"];
+        //         //We will use ItemValue array here, since we want to have value different from display text
+        //         //If your value equals to display text, then you may simply return the array of strings.
+        //         // res.push({ value: null }); 
+        //         // for (var i = 0; i < res.length; i++) {
+        //         //   var item = res[i];
+        //         //   res.push({ value: item.alpha2Code, text: item.name });
+        //         //   }
+        //         //return the result into Survey Creator property editor
+        //         choicesCallback(res);
+        //   }
+        // }
       });
       SurveyKo.Serializer.addProperty("survey", 
-        { name: "nom" ,displayName: "Name",category: "Signature" ,choices: ["", "Account", "Development"] }
+        { name: "nom" ,displayName: "Name",category: "Signature",type: "checkbox" ,choices: ["", "Account", "Development"] }
       );
       SurveyKo.Serializer.addProperty("survey", 
-        { name: "prenom" ,displayName: "Last Name",category: "Signature" ,choices: ["", "Account", "Development"] }
+        { name: "prenom" ,displayName: "Last Name",category: "Signature" ,type: "checkbox",choices: ["", "Account", "Development"] }
       );
       SurveyKo.Serializer.addProperty("survey", 
-        { name: "upload" ,displayName: "Upload",category: "Signature" ,choices: ["", "Account", "Development"] }
+        { name: "upload",displayName: "Upload",category: "Signature" ,type: "checkbox"}
+      );
+
+      SurveyKo.Serializer.addProperty("survey", 
+        { name: "multiUser:itemvalues",displayName: "Multi User",category: "Signature" }
       );
   
 
@@ -385,9 +422,9 @@ export default SurveyCreator;
 
 
 
-$(document).on('click', 'button.my-button', function() {       
-      console.log("delayed binding");// do something
-      console.log(SurveyKo);
-      console.log(this); 
-     // alert('call verification services');
-});
+// $(document).on('click', 'button.my-button', function() {       
+//       console.log("delayed binding");// do something
+//       console.log(SurveyKo);
+//       console.log(this); 
+//      // alert('call verification services');
+// });

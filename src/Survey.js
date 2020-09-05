@@ -143,9 +143,11 @@ function onClearFiles(result){
         }
     }); 
  
-    Survey.Serializer.addProperty("survey", 
-        { name: "signmode" ,displayName: "Mode",category: "Signature"  
-      });
+    Survey.Serializer.addProperty("survey", { name: "signmode" });
+    Survey.Serializer.addProperty("survey", { name: "nom" });
+    Survey.Serializer.addProperty("survey", { name: "prenom" });
+    Survey.Serializer.addProperty("survey", { name: "upload"});
+
 
     function onAfterRenderSurvey(sender,options){
     // console.log(sender);
@@ -182,17 +184,30 @@ export function SurveyPage() {
   }
   
 
-  $(document).ready(function(){
-      $(".my-button").click(function(){
-              //  console.log(window.survey.getQuestionByName("MODE").value);
-             // let signatory = window.survey.getQuestionByName("SIGNATORY").value[0];
-            //  let query =signatory.NOM +'+'+signatory.PRENOM +'+'+signatory.TELEPHONE +'+'+signatory.EMAIL; 
-                console.log(window.survey.logo);
-                console.log(window.survey.description);
-                console.log(window.survey.questionStartIndex);
-                console.log(window.survey.signmode);
-            //window.open("https://www.google.com?q="+query);
-      });
+//   $(document).ready(function(){
+//       $(".my-button").click(function(){
+//               //  console.log(window.survey.getQuestionByName("MODE").value);
+//               let signatory = window.survey.getQuestionByName(window.survey.signmode).value;
+//               let nom = window.survey.getQuestionByName(window.survey.nom).value;
+//               let prenom = window.survey.getQuestionByName(window.survey.prenom).value;
+//                 var obj = { signmode: signatory, nom: window.survey.nom, prenom:  prenom };
+//                 var myJSON = JSON.stringify(obj);
+//                 alert(myJSON);
+//             //window.open("https://www.google.com?q="+query);
+//       });
+//   });
+
+  $(document).on('click', 'button.my-button', function() { 
+    $(".my-button").click(function(){
+        //  console.log(window.survey.getQuestionByName("MODE").value);
+        let signatory = window.survey.getQuestionByName(window.survey.signmode).value;
+        let nom = window.survey.getQuestionByName(window.survey.nom).value;
+        let prenom = window.survey.getQuestionByName(window.survey.prenom).value;
+          var obj = { signmode: signatory, nom:nom, prenom:  prenom };
+          var myJSON = JSON.stringify(obj);
+          alert(myJSON);
+      //window.open("https://www.google.com?q="+query);
+});
   });
 
   
