@@ -6,7 +6,7 @@ import * as SurveyCore from "survey-core";
 import * as widgets from "surveyjs-widgets";
 import * as SurveyPDF from "survey-pdf";
 
-import { json } from "./survey_json.js";
+import { demojson } from "./survey_json.js";
 
 //widgets.icheck(SurveyCore, $);
 widgets.prettycheckbox(SurveyCore);
@@ -23,13 +23,13 @@ widgets.autocomplete(SurveyCore, $);
 widgets.bootstrapslider(SurveyCore);
 
 function savePDF(model) {
-    var surveyPDF = new SurveyPDF.SurveyPDF(json);
+    var surveyPDF = new SurveyPDF.SurveyPDF(demojson);
     surveyPDF.data = model.data;
     surveyPDF.save();
 };
 
 export function ExportToPDFPage() {
-    var model = new SurveyCore.SurveyModel(json);
+    var model = new SurveyCore.SurveyModel(demojson);
     return (
       <div className="container">
         <div className="jumbotron">

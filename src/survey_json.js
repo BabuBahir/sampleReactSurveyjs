@@ -1,4 +1,4 @@
-export var json = {
+export var demojson = {
   "pages": [
    {
     "name": "page1",

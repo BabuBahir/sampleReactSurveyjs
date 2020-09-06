@@ -14,8 +14,11 @@ import "select2/dist/js/select2.js";
 import "jquery-bar-rating";
 // import "pretty-checkbox/dist/pretty-checkbox.css";
 import VASSlider from 'react-surveyjs-vas-widget';
-import { json } from "./survey_json.js";
-//import { json } from "./fileUploader.js";
+//import { demojson } from "./survey_json.js";
+import {demojson} from "./Kira/signInComponent"
+import {signApiComponent} from "./Kira/eSignApi"
+//import { demojson } from "./survey_json.js";
+//import { demojson } from "./fileUploader.js";
 import { MyQuestion } from "./MyQuestion";
 //import "icheck/skins/square/blue.css";
 
@@ -71,77 +74,81 @@ function onUploadFiles(survey,options){
 function onClearFiles(result){
     console.log(' grindrceel');
 }
-
-    console.log(Survey);
+ 
     Survey.ReactQuestionFactory.Instance.registerQuestion("myquestion", props => {
         return React.createElement(MyQuestion, props);
     });
-
+     
     Survey
-    .ComponentCollection
-    .Instance
-    .add({
-        name: "FileUploader",
-        title: "FileUploader",
-        questionJSON: {
-            json
-        },
-        onInit() {
-            //Create a new class derived from Survey.ItemValue
-            //It hides text, visibleIf and enableIf properties
-            //and it adds a new price number property.              
-            //Add orderItems properties. It is an array of ordertableitem elements
-            Survey
-            .Serializer
-            .addProperty("FileUploader", {
-                name: "restUrl:string",
-                default: "/get/callYourapi",
-                category: "general"
-            });
+        .ComponentCollection
+        .Instance
+        .add(signApiComponent);
 
-        },
-        onLoaded(question) {
-            //Create rows and default values on first loading
-            question.name="idfile";
-            console.log(question);
-            console.log("I am loaded");
-        },
-        //Calls on property changed in component/root question
-        onPropertyChanged(question, propertyName, newValue) {  
-            console.log('123');       
-            // if(propertyName.indexOf("value") !== -1){
-            //     //   console.log(question); 
-            //       var formData = new FormData();
-            //       formData.append(newValue.name, newValue);
-            //       var xhr = new XMLHttpRequest();
-            //           xhr.responseType = "json";
-            //           xhr.open("POST", "/api/callYourService/uploadFiles?accessKey=<your_access_key>"); // https://surveyjs.io/api/MySurveys/uploadFiles
-            //           xhr.onload = function () {
-            //               var data = xhr.response;
-            //               // options.callback("success", options.files.map(file => {
-            //               //     return {
-            //               //         file: file,
-            //               //         content: data[file.name]
-            //               //     };
-            //               // }));
-            //           };
-            //       xhr.send(formData);
-            //   }          
-        },
-        //Calls when a property of ItemValue element is changed.
-        onItemValuePropertyChanged(question, options) {
-            //If the propertyName of the array is "orderItems"
-            console.log("I am value changed");
-        } ,
-        onUploadFiles(question, options) {
-            //If the propertyName of the array is "orderItems"
-            console.log("I am uploaded files changed");
-        },
-        onUploadFile(question, options) {
-            //If the propertyName of the array is "orderItems"
-            console.log("I am uploaded files cxxhanged");
-        }
-    }); 
+    // Survey
+    // .ComponentCollection
+    // .Instance
+    // .add({
+    //     name: "FileUploader",
+    //     title: "FileUploader",
+    //     questionJSON: {
+    //         demojson
+    //     },
+    //     onInit() {
+    //         //Create a new class derived from Survey.ItemValue
+    //         //It hides text, visibleIf and enableIf properties
+    //         //and it adds a new price number property.              
+    //         //Add orderItems properties. It is an array of ordertableitem elements
+    //         Survey
+    //         .Serializer
+    //         .addProperty("FileUploader", {
+    //             name: "restUrl:string",
+    //             default: "/get/callYourapi",
+    //             category: "general"
+    //         });
+
+    //     },
+    //     onLoaded(question) {
+    //         //Create rows and default values on first loading
+    //         question.name="idfile";
+    //         console.log(question);
+    //         console.log("I am loaded");
+    //     },
+    //     //Calls on property changed in component/root question
+    //     onPropertyChanged(question, propertyName, newValue) {  
+    //         console.log('123');       
+    //         // if(propertyName.indexOf("value") !== -1){
+    //         //     //   console.log(question); 
+    //         //       var formData = new FormData();
+    //         //       formData.append(newValue.name, newValue);
+    //         //       var xhr = new XMLHttpRequest();
+    //         //           xhr.responseType = "json";
+    //         //           xhr.open("POST", "/api/callYourService/uploadFiles?accessKey=<your_access_key>"); // https://surveyjs.io/api/MySurveys/uploadFiles
+    //         //           xhr.onload = function () {
+    //         //               var data = xhr.response;
+    //         //               // options.callback("success", options.files.map(file => {
+    //         //               //     return {
+    //         //               //         file: file,
+    //         //               //         content: data[file.name]
+    //         //               //     };
+    //         //               // }));
+    //         //           };
+    //         //       xhr.send(formData);
+    //         //   }          
+    //     },
+    //     //Calls when a property of ItemValue element is changed.
+    //     onItemValuePropertyChanged(question, options) {
+    //         //If the propertyName of the array is "orderItems"
+    //         console.log("I am value changed");
+    //     } ,
+    //     onUploadFiles(question, options) {
+    //         //If the propertyName of the array is "orderItems"
+    //         console.log("I am uploaded files changed");
+    //     },
+    //     onUploadFile(question, options) {
+    //         //If the propertyName of the array is "orderItems"
+    //         console.log("I am uploaded files cxxhanged");
+    //     }
+    // }); 
  
     Survey.Serializer.addProperty("survey", { name: "signmode" });
     Survey.Serializer.addProperty("survey", { name: "nom" });
@@ -167,7 +174,7 @@ function onClearFiles(result){
 
  
 export function SurveyPage() {
-    var model = new Survey.Model(json);
+    var model = new Survey.Model(demojson);
     window.survey =model;
     return (
     <div className="container">
@@ -207,7 +214,7 @@ export function SurveyPage() {
           var myJSON = JSON.stringify(obj);
           alert(myJSON);
       //window.open("https://www.google.com?q="+query);
-});
+        });
   });
 
   
