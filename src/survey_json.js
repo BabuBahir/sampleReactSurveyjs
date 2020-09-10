@@ -3,49 +3,30 @@ export var demojson = {
    {
     "name": "page1",
     "elements": [
+      {
+        "type": "file",
+        "name": "question12",
+        "maxSize": 0
+       },
+       {
+        "type": "CleanFile",
+        "name": "question32",
+        "title": "Custom File"
+       },
+      {
+        "type": "file",
+        "name": "question11",
+        "maxSize": 0
+     },
      {
-      "type": "radiogroup",
+      "type": "text",
       "name": "question1",
-      "title": "Mode",
-      "choices": [
-       {
-        "value": "universign-face",
-        "text": "e-sign face-to-face"
-       },
-       {
-        "value": "universign",
-        "text": "e-sign"
-       },
-       {
-        "value": "manual",
-        "text": "manual"
-       }
-      ],
-      "colCount": 3
+      "title": "First name"
      },
      {
       "type": "text",
       "name": "question2",
-      "title": "Village Name"
-     },
-     {
-      "type": "text",
-      "name": "question3",
-      "title": "First Name"
-     },
-     {
-      "type": "radiogroup",
-      "name": "question4",
-      "choices": [
-       "item1",
-       "item2",
-       "item3"
-      ]
-     },
-     {
-      "type": "html",
-      "name": "question9",
-      "html": "<button class='my-button'>Call Bank Services</button>"
+      "title": "LastName"
      }
     ]
    },
@@ -54,32 +35,23 @@ export var demojson = {
     "elements": [
      {
       "type": "text",
-      "name": "question5",
-      "title": "website"
+      "name": "question3",
+      "title": "City"
      },
      {
       "type": "text",
-      "name": "question6",
-      "title": "Last Name"
+      "name": "question4",
+      "title": "Email"
      },
      {
-      "type": "radiogroup",
-      "name": "question7",
-      "choices": [
-       "item1",
-       "item2",
-       "item3"
-      ]
-     },
-     {
-      "type": "fileuploader",
-      "name": "question8"
+      "type": "html",
+      "name": "question5",
+      "html": "<button class='callAuthBtn'>Call Authentication Services</button>"
      }
     ]
    }
   ],
   "signmode": "question1",
-  "nom": "question3",
-  "prenom": "question6",
-  "upload": "question8"
+  "nom": "question2",
+  "prenom": "question3"
  }

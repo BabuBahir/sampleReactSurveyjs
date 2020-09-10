@@ -143,6 +143,7 @@ class SurveyCreator extends Component {
               {
                 "type": "multipletext",
                   "name": "SIGNATORY",
+                  "visibleIf": "{MODE} <> 'manual'",
                   "title": "SIGNATORY",
                   "items": [
                     {
@@ -172,6 +173,7 @@ class SurveyCreator extends Component {
               {
                 "type": "file",
                 "name": "Upload", 
+                "visibleIf": "{MODE} == 'manual'",
                 "startWithNewLine": false,
                 "showPreview": false,
                 "maxSize": 0
@@ -206,7 +208,7 @@ class SurveyCreator extends Component {
 
       SurveyKo.Serializer.removeProperty("question", "description");
       
-    let options = { showEmbededSurveyTab: true , questionTypes: ["text", "checkbox", "dropdown" ,"radiogroup"]  };
+    let options = { showEmbededSurveyTab: true , questionTypes: ["text", "checkbox", "dropdown" ,"radiogroup","panel"]  };
     this.surveyCreator = new SurveyJSCreator.SurveyCreator(
       null,
       options

@@ -3,6 +3,7 @@ import * as  Survey from "survey-react";
 import {  CustomWidgetCollection } from "survey-react";
 import * as widgets from "surveyjs-widgets";
 import "survey-react/survey.css";
+//import "./index.css";
 // import "jquery-ui/themes/base/all.css";
 //import "nouislider/distribute/nouislider.css";
 // import "select2/dist/css/select2.css";
@@ -12,13 +13,12 @@ import $ from "jquery";
 // import "jquery-ui/ui/widgets/datepicker.js";
 import "select2/dist/js/select2.js";
 import "jquery-bar-rating";
-// import "pretty-checkbox/dist/pretty-checkbox.css";
-import VASSlider from 'react-surveyjs-vas-widget';
-//import { demojson } from "./survey_json.js";
-import {demojson} from "./Kira/signInComponent"
+// import "pretty-checkbox/dist/pretty-checkbox.css"; 
+import { demojson } from "./survey_json.js";
+//import {demojson} from "./Kira/signInComponent"
 import {signApiComponent} from "./Kira/eSignApi"
 //import { demojson } from "./survey_json.js";
-//import { demojson } from "./fileUploader.js";
+import fileUploaderCompnent from "./fileUploader.js";
 import { MyQuestion } from "./MyQuestion";
 //import "icheck/skins/square/blue.css";
 
@@ -41,6 +41,7 @@ Survey.StylesManager.applyTheme("bootstrap");
 // widgets.autocomplete(Survey, $);
 widgets.bootstrapslider(Survey);
 
+
 function onValueChanged(result) {
     //console.log("value changed!");
 }
@@ -50,25 +51,26 @@ function onComplete(result) {
 }
 
 function onUploadFiles(survey,options){
-    var formData = new FormData();
-    options
-        .files
-        .forEach(function (file) {
-            formData.append(file.name, file);
-        });
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = "json";
-    xhr.open("POST", "/YouarApi/MySurveys/uploadFiles");  
-    xhr.onload = function () {
-        var data = xhr.response;
-        options.callback("success", options.files.map(file => {
-            return {
-                file: file,
-                content: data[file.name]
-            };
-        }));
-    };
-    xhr.send(formData);
+    console.log("all upload files");
+    // var formData = new FormData();
+    // options
+    //     .files
+    //     .forEach(function (file) {
+    //         formData.append(file.name, file);
+    //     });
+    // var xhr = new XMLHttpRequest();
+    // xhr.responseType = "json";
+    // xhr.open("POST", "/YouarApi/MySurveys/uploadFiles");  
+    // xhr.onload = function () {
+    //     var data = xhr.response;
+    //     options.callback("success", options.files.map(file => {
+    //         return {
+    //             file: file,
+    //             content: data[file.name]
+    //         };
+    //     }));
+    // };
+    // xhr.send(formData);
 }
 
 function onClearFiles(result){
@@ -78,100 +80,35 @@ function onClearFiles(result){
     Survey.ReactQuestionFactory.Instance.registerQuestion("myquestion", props => {
         return React.createElement(MyQuestion, props);
     });
-     
+    
+    Survey
+    .ComponentCollection
+    .Instance
+    .add(fileUploaderCompnent);
+
     Survey
         .ComponentCollection
         .Instance
         .add(signApiComponent);
-
-    // Survey
-    // .ComponentCollection
-    // .Instance
-    // .add({
-    //     name: "FileUploader",
-    //     title: "FileUploader",
-    //     questionJSON: {
-    //         demojson
-    //     },
-    //     onInit() {
-    //         //Create a new class derived from Survey.ItemValue
-    //         //It hides text, visibleIf and enableIf properties
-    //         //and it adds a new price number property.              
-    //         //Add orderItems properties. It is an array of ordertableitem elements
-    //         Survey
-    //         .Serializer
-    //         .addProperty("FileUploader", {
-    //             name: "restUrl:string",
-    //             default: "/get/callYourapi",
-    //             category: "general"
-    //         });
-
-    //     },
-    //     onLoaded(question) {
-    //         //Create rows and default values on first loading
-    //         question.name="idfile";
-    //         console.log(question);
-    //         console.log("I am loaded");
-    //     },
-    //     //Calls on property changed in component/root question
-    //     onPropertyChanged(question, propertyName, newValue) {  
-    //         console.log('123');       
-    //         // if(propertyName.indexOf("value") !== -1){
-    //         //     //   console.log(question); 
-    //         //       var formData = new FormData();
-    //         //       formData.append(newValue.name, newValue);
-    //         //       var xhr = new XMLHttpRequest();
-    //         //           xhr.responseType = "json";
-    //         //           xhr.open("POST", "/api/callYourService/uploadFiles?accessKey=<your_access_key>"); // https://surveyjs.io/api/MySurveys/uploadFiles
-    //         //           xhr.onload = function () {
-    //         //               var data = xhr.response;
-    //         //               // options.callback("success", options.files.map(file => {
-    //         //               //     return {
-    //         //               //         file: file,
-    //         //               //         content: data[file.name]
-    //         //               //     };
-    //         //               // }));
-    //         //           };
-    //         //       xhr.send(formData);
-    //         //   }          
-    //     },
-    //     //Calls when a property of ItemValue element is changed.
-    //     onItemValuePropertyChanged(question, options) {
-    //         //If the propertyName of the array is "orderItems"
-    //         console.log("I am value changed");
-    //     } ,
-    //     onUploadFiles(question, options) {
-    //         //If the propertyName of the array is "orderItems"
-    //         console.log("I am uploaded files changed");
-    //     },
-    //     onUploadFile(question, options) {
-    //         //If the propertyName of the array is "orderItems"
-    //         console.log("I am uploaded files cxxhanged");
-    //     }
-    // }); 
  
     Survey.Serializer.addProperty("survey", { name: "signmode" });
     Survey.Serializer.addProperty("survey", { name: "nom" });
     Survey.Serializer.addProperty("survey", { name: "prenom" });
     Survey.Serializer.addProperty("survey", { name: "upload"});
 
-
-    function onAfterRenderSurvey(sender,options){
-    // console.log(sender);
-    // console.log(options);
+    function onAfterRenderQuestion(sender,options){  
+         console.log(options.question);
+         console.log($(options.htmlElement).find(".sv_q_file_remove_button"));
+        //  if(options.cssClasses.removeButton){ 
+        //     options.cssClasses.removeButton="kalli"
+        //     console.log(options.cssClasses.removeButton);
+        //  }
     }
 
-    CustomWidgetCollection.Instance.addCustomWidget({
-        name: 'visual_analog_scale',
-        render: question => (
-        <VASSlider
-            minRateDescription={question.minRateDescription}
-            maxRateDescription={question.maxRateDescription}
-            rating={question.value}
-            onRatingChange={(rating) => { question.value = rating; }}
-        />),
-    });
-
+    function onAfterRenderSurvey(sender,options){ 
+        // console.log(sender);
+         console.log(options.htmlElement);
+    }
  
 export function SurveyPage() {
     var model = new Survey.Model(demojson);
@@ -184,37 +121,23 @@ export function SurveyPage() {
             onComplete={onComplete}
             onValueChanged={onValueChanged} 
             onUploadFiles={onUploadFiles}
-            onAfterRenderSurvey ={onAfterRenderSurvey } 
+            onAfterRenderSurvey ={onAfterRenderSurvey} 
+            onAfterRenderQuestion={	onAfterRenderQuestion}
           />
     </div>
     );
-  }
-  
+  } 
 
-//   $(document).ready(function(){
-//       $(".my-button").click(function(){
-//               //  console.log(window.survey.getQuestionByName("MODE").value);
-//               let signatory = window.survey.getQuestionByName(window.survey.signmode).value;
-//               let nom = window.survey.getQuestionByName(window.survey.nom).value;
-//               let prenom = window.survey.getQuestionByName(window.survey.prenom).value;
-//                 var obj = { signmode: signatory, nom: window.survey.nom, prenom:  prenom };
-//                 var myJSON = JSON.stringify(obj);
-//                 alert(myJSON);
-//             //window.open("https://www.google.com?q="+query);
-//       });
-//   });
 
-  $(document).on('click', 'button.my-button', function() { 
-    $(".my-button").click(function(){
-        //  console.log(window.survey.getQuestionByName("MODE").value);
-        let signatory = window.survey.getQuestionByName(window.survey.signmode).value;
-        let nom = window.survey.getQuestionByName(window.survey.nom).value;
-        let prenom = window.survey.getQuestionByName(window.survey.prenom).value;
-          var obj = { signmode: signatory, nom:nom, prenom:  prenom };
-          var myJSON = JSON.stringify(obj);
-          alert(myJSON);
-      //window.open("https://www.google.com?q="+query);
-        });
-  });
+  $(document).on('click', 'button.callAuthBtn', function() {  
+          let quest11 = window.survey.getQuestionByName("question11");
+          console.log(quest11);
+        // let signatory = window.survey.getQuestionByName(window.survey.signmode).value;
+        // let nom = window.survey.getQuestionByName(window.survey.nom).value;
+        // let prenom = window.survey.getQuestionByName(window.survey.prenom).value;
+        //   var obj = { signmode: signatory, nom:nom, prenom:  prenom };
+        //   var myJSON = JSON.stringify(obj);
+        //   alert(myJSON);  
+    });
 
   

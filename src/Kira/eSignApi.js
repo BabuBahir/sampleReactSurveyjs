@@ -57,7 +57,8 @@ export var signApiComponent= ({
               },
               {
                 "type": "file",
-                "name": "Upload",        
+                "name": "Upload",      
+                "visibleIf": "{MODE} == 'manual'",  
                 "startWithNewLine": false,
                 "showPreview": false,
                 "maxSize": 0
@@ -83,32 +84,33 @@ export var signApiComponent= ({
                 // console.log(question.contentPanel.getQuestionByName("SigInComponent"));        
                console.log("collection question created"); 
                 console.log(question.name);
-                question.customQuestion.json.elementsJSON[1].visibleIf= "{"+question.name+".MODE} <> 'manual'";
-                 question.customQuestion.json.elementsJSON[3].visibleIf= "{"+question.name+".MODE} = 'manual'"; 
-                // console.log(question.customQuestion.json.elementsJSON);
+               //  question.customQuestion.json.elementsJSON[1].visibleIf= "{"+question.name+".MODE} <> 'manual'";
+                // question.customQuestion.json.elementsJSON[3].visibleIf= "{"+question.name+".MODE} = 'manual'"; 
+               //  console.log(question.customQuestion.json.elementsJSON);
               },
               onLoaded(question) {
                   //Create rows and default values on first loading    
                   //console.log(question.name);                
+                 // question.customQuestion.json.elementsJSON[1].visibleIf= "{"+question.name+".MODE} <> 'manual'";
+                 //question.customQuestion.json.elementsJSON[3].visibleIf= "{"+question.name+".MODE} = 'manual'"; 
                    console.log("I am loaded"); 
               },
               //Calls on property changed in component/root question
               onPropertyChanged(question, propertyName, newValue) { 
-                //console.log("Property changed");                 
-                question.customQuestion.json.elementsJSON[1].visibleIf= "{"+question.name+".MODE} <> 'manual'";
-                question.customQuestion.json.elementsJSON[3].visibleIf= "{"+question.name+".MODE} = 'manual'";                
-                console.log(question.customQuestion.json.elementsJSON); 
+                //console.log("Property changed");                                                 
               },
               //Calls when a property of ItemValue element is changed.
               onItemValuePropertyChanged(question, options) {
                   //If the propertyName of the array is "orderItems"
                   //console.log(question.name);                  
-                  //console.log("I am value changed");
+                  //console.log("I am value changed");                  
               },
               onAfterRenderContentElement(question, element, htmlElement) {
                 //For example, add new elements to htmlElement based on some logic
                 //question is the component question and element is a content element (question or panel)
                 console.log(question.name);
+                question.customQuestion.json.elementsJSON[1].visibleIf= "{"+question.name+".MODE} <> 'manual'";
+                question.customQuestion.json.elementsJSON[3].visibleIf= "{"+question.name+".MODE} = 'manual'";                
                 //console.log("I am onAfterRenderContentElement"); 
                 let self=this;
                 if($(htmlElement).attr('name')=="SEND"){ 
